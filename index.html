@@ -1,80 +1,40 @@
 <!DOCTYPE html>
-<html lang="fa" dir="rtl">
+<html lang="en">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-  <title>Hodous — بزرگترین ردفلگ برای تو چیه؟</title>
-  <meta name="description" content="Hodous — بزرگترین Red Flag تو چیه؟ ارزیابی خطوط قرمز و حساسیت‌های رفتاری در روابط" />
+  <title>Hodous</title>
+  <meta name="description" content="Hodous — A minimalist personal brand of calm, science, philosophy, and future contemplation." />
 
-  <!-- Custom Styles (Pure CSS, Zero SVG, Apple San Francisco Typography, Pastel Red Theme) -->
-  <link rel="stylesheet" href="red-or-green.css" />
-  <link rel="stylesheet" href="green-or-red.css" />
-  <link rel="stylesheet" href="biggest-green-flag.css" />
-
-  <style>
-    /* Nickname & Results Archive Modals (Zero SVG, Pure CSS) */
-    .nickname-modal-overlay {
-      position: fixed;
-      inset: 0;
-      background: rgba(11, 34, 61, 0.45);
-      backdrop-filter: blur(8px);
-      -webkit-backdrop-filter: blur(8px);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      z-index: 1000;
-      padding: 16px;
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"SF Pro"', '"SF Arabic"', '-apple-system', 'BlinkMacSystemFont', '"SF Pro Display"', '"SF Pro Text"', '"SF Arabic"', '"SF Pro Arabic"', 'sans-serif'],
+          },
+          colors: {
+            iceblue: '#C0E6FD',
+            mistblue: '#80AAD3',
+            steelblue: '#5B86B6',
+            slateblue: '#3F6593',
+            deepnavy: '#1B3554',
+            midnightblue: '#000F22'
+          }
+        }
+      }
     }
+  </script>
 
-    .nickname-modal-card {
-      background: rgba(255, 255, 255, 0.95);
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
-      border: 1px solid rgba(192, 230, 253, 0.95);
-      border-radius: 28px;
-      padding: 26px 22px;
-      max-width: 440px;
-      width: 100%;
-      box-shadow: 0 20px 50px rgba(11, 34, 61, 0.22);
-      animation: modalFadeIn 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-    }
-
-    @keyframes modalFadeIn {
-      from { opacity: 0; transform: scale(0.95) translateY(8px); }
-      to { opacity: 1; transform: scale(1) translateY(0); }
-    }
-
-    .participant-badge-pill {
-      display: inline-flex;
-      align-items: center;
-      gap: 6px;
-      padding: 4px 14px;
-      border-radius: 999px;
-      background: #E8F4FC;
-      border: 1px solid #C0E6FD;
-      font-size: 12px;
-      font-weight: 500;
-      color: #1B3554;
-      margin-bottom: 10px;
-    }
-
-    .url-result-banner {
-      background: linear-gradient(135deg, #1B3554 0%, #3F6593 100%);
-      color: #FFFFFF;
-      padding: 12px 18px;
-      border-radius: 18px;
-      margin-bottom: 20px;
-      box-shadow: 0 4px 16px rgba(27, 53, 84, 0.2);
-      font-size: 13px;
-      line-height: 1.6;
-    }
-  </style>
-
+  <!-- Custom Styles (Pure CSS, Zero SVG) -->
+  <link rel="stylesheet" href="style.css" />
 </head>
-<body>
+<body class="bg-[#E3F0FC] text-[#1B3554] antialiased">
 
   <!-- ====================================================================
-       TOP NAVIGATION (Hodous Top Navigation & Hamburger Menu)
+       TOP NAVIGATION (Top-Left 3-Line Hamburger Menu & 3 Destinations)
        ==================================================================== -->
   <header class="top-nav">
     <!-- Top-Left 3-Line Hamburger Button (Pure HTML & CSS, Zero SVG) -->
@@ -85,18 +45,13 @@
     </button>
 
     <!-- Center Wordmark -->
-    <a href="index.html" class="text-[15px] font-medium tracking-tight text-[#000F22] hover:text-[#3F6593] transition-colors" style="text-decoration:none;">
+    <a href="index.html" class="text-[15px] font-medium tracking-tight text-[#000F22] hover:text-[#3F6593] transition-colors">
       Hodous
     </a>
 
-    <!-- Top-Right Actions: Language Switcher & Quiet Status -->
-    <div style="display: flex; align-items: center; gap: 10px;">
-      <button id="global-lang-toggle" class="global-lang-toggle" type="button" aria-label="تغییر زبان / Switch Language" title="تغییر زبان آزمون‌ها">
-        <span class="global-lang-text">EN</span>
-      </button>
-      <div class="text-[11px] tracking-[0.2em] uppercase text-[#5B86B6] font-normal hidden sm:inline select-none" style="direction:ltr; font-family:var(--font-stack);">
-        Test
-      </div>
+    <!-- Top-Right Quiet Celestial Coordinate -->
+    <div class="text-[11px] tracking-[0.2em] uppercase text-[#5B86B6] font-normal hidden sm:inline select-none">
+      20h 39m · +11°
     </div>
   </header>
 
@@ -105,1027 +60,209 @@
 
   <!-- Slide-out Navigation Drawer (Home, Song, Test) -->
   <aside id="nav-drawer" class="nav-drawer">
-    <div style="display:flex; flex-direction:column; gap:20px;">
-      <div style="border-bottom: 1px solid rgba(91, 134, 182, 0.2); padding-bottom: 14px;">
-        <span style="font-size: 11px; font-weight: 400; letter-spacing: 0.22em; text-transform: uppercase; color: #5B86B6; display: block; direction: ltr;">
-          Menu
+    <div class="space-y-6">
+      <div class="border-b border-[#5B86B6]/20 pb-4">
+        <span class="text-xs font-light tracking-[0.22em] uppercase text-[#5B86B6] block">
+          Navigation Menu
         </span>
       </div>
 
-      <nav style="display:flex; flex-direction:column; gap:8px;">
-        <a href="index.html" class="nav-drawer-link">
+      <nav class="space-y-2.5">
+        <!-- 1. Home -->
+        <a href="index.html" class="nav-drawer-link is-active" id="nav-link-home">
           <span>Home</span>
-          <span style="font-size: 11px; color: #5B86B6; direction: ltr;">Portal</span>
+          <span class="w-1.5 h-1.5 rounded-full bg-[#1B3554]"></span>
         </a>
 
-        <a href="song.html" class="nav-drawer-link">
+        <!-- 2. Song -->
+        <a href="song.html" class="nav-drawer-link" id="nav-link-song">
           <span>Song</span>
-          <span style="font-size: 11px; color: #5B86B6; direction: ltr;">Audio</span>
+          <span class="text-[11px] text-[#3F6593] tracking-wider uppercase font-medium bg-[#C0E6FD]/40 px-2 py-0.5 rounded-full">Audio</span>
         </a>
 
-        <a href="test.html" class="nav-drawer-link is-active">
+        <!-- 3. Test -->
+        <a href="test.html" class="nav-drawer-link" id="nav-link-test">
           <span>Test</span>
-          <span style="width: 6px; height: 6px; border-radius: 50%; background: #D24B4B;"></span>
+          <span class="text-[11px] text-[#3F6593] tracking-wider uppercase font-medium bg-[#C0E6FD]/40 px-2 py-0.5 rounded-full">Portal</span>
         </a>
       </nav>
     </div>
 
-    <div style="padding-top: 20px; border-top: 1px solid rgba(91, 134, 182, 0.2); font-size: 12px; color: #5B86B6; font-weight: 300;">
+    <!-- Drawer Footer Note -->
+    <div class="pt-6 border-t border-[#5B86B6]/20 text-xs text-[#5B86B6] font-light">
       Hodous • Mind & Cosmos
     </div>
   </aside>
 
   <!-- ====================================================================
-       STARFIELD CANVAS (Dense Small Shimmering Stars, Zero SVG)
+       HERO (Serene, Airy Light Blue Atmosphere with Dense Stars)
        ==================================================================== -->
-  <canvas id="star-canvas"></canvas>
+  <div class="hero-cosmic-universe">
+    <!-- Starfield Canvas (Dense Small Shimmering Stars, Zero SVG) -->
+    <canvas id="star-canvas"></canvas>
 
-  <!-- Ambient Radiant Nebula Glow Highlights (Pastel Red / Ruby) -->
-  <div class="ambient-nebula-glow"></div>
+    <!-- Layered Radiant Nebula Glow Highlights -->
+    <div class="ambient-nebula-glow"></div>
+    <div class="ambient-nebula-secondary"></div>
 
-  <!-- ====================================================================
-       MAIN APPLICATION VIEWPORT
-       ==================================================================== -->
-  <main class="app-viewport">
-
-    <!-- Sub-Nav Session Bar (Return to Test & Sound Toggle) -->
-    <div id="test-session-bar" class="test-session-bar" style="display: none;">
-      <button id="btn-back-to-hub" class="btn-back-to-hub" type="button">
-        <span>→</span>
-        <span>بازگشت</span>
-      </button>
-
-      <button id="sound-toggle-btn" class="sound-toggle-btn" type="button" aria-label="تنظیم صدا">
-        <span class="sound-indicator-dot"></span>
-        <span id="sound-status-text">صدا فعال</span>
-      </button>
-    </div>
-
-    <!-- ==================================================================
-         VIEW 0: TEST HUB (Two Independent Tests)
-         ================================================================== -->
-    <section id="view-hub" class="view-section is-active" aria-label="بخش تست">
+    <!-- ================================================================
+         TWO LARGER CLICKABLE PORTAL STARS: "song" & "test"
+         Direct Entry Points (Pure HTML & CSS3, Zero SVG)
+         ================================================================ -->
+    <div class="portal-stars-system" aria-label="Portal Navigation Stars">
       
-      <div class="test-page-header">
-        <h1 class="test-page-title" id="admin-secret-trigger" style="user-select:none; cursor:pointer;" title="Hodous Assessment">Test</h1>
-        <div style="margin-top: 8px; display: flex; justify-content: center;">
-          <button type="button" id="btn-open-results-log" style="display:none; align-items:center; gap:8px; font-size:12px; color:#1B3554; background:rgba(255,255,255,0.95); border:1px solid #1B3554; padding:6px 20px; border-radius:999px; cursor:pointer; transition:all 0.2s; font-family:inherit; box-shadow:0 3px 12px rgba(27,53,84,0.12); font-weight:600;">
-            <span>🔒</span>
-            <span>پنل مدیریت نتایج (مشاهده انتخاب‌های شرکت‌کنندگان)</span>
-          </button>
+      <!-- Left Portal Star: "song" -->
+      <a href="song.html" id="portal-star-song" class="portal-star portal-star-song" title="ورود به بخش Song" aria-label="Song Space">
+        <div class="portal-star-figure">
+          <div class="portal-star-halo"></div>
+          <div class="portal-star-flare-h"></div>
+          <div class="portal-star-flare-v"></div>
+          <div class="portal-star-flare-diag"></div>
+          <div class="portal-star-core"></div>
         </div>
-      </div>
-      <div id="url-param-banner" class="url-result-banner" style="display:none;" dir="rtl"></div>
-
-      <div class="test-hub-grid">
-
-        <!-- Card 1: Featured Red Flag Elimination Test (بزرگترین ردفلگ برای تو چیه؟) -->
-        <div id="card-launch-rog" class="test-hero-card" role="button" tabindex="0" title="ورود به آزمون بزرگترین ردفلگ برای تو چیه؟">
-          
-          <div style="margin-bottom: 14px;">
-            <span style="display:inline-flex; align-items:center; gap:6px; font-size:12px; color:#C92A2A; background:rgba(255,227,227,0.7); padding:4px 14px; border-radius:999px; border:1px solid rgba(224,49,49,0.25);">
-              <span style="width:6px; height:6px; border-radius:50%; background:#E03131;"></span>
-              <span id="hub-card-badge-text">۱۰ سناریوی واقعی · مقیاس ۱ تا ۱۰</span>
-            </span>
-          </div>
-
-          <!-- Title: بزرگترین Red Flag تو چیه؟ with "Red" in red -->
-          <h2 id="hub-card-title" class="test-hero-title">
-            بزرگترین <span class="card-title-red">ردفلگ</span> برای تو چیه؟
-          </h2>
-
-          <!-- Subtitle 1: اگر این رفتارها را از یک نفر ببینی، چقدر برایت قابل‌قبول‌اند؟ -->
-          <p id="hub-card-sub1" class="test-hero-sub-primary">
-            اگر این رفتارها را از یک نفر ببینی، چقدر برایت قابل‌قبول‌اند؟
-          </p>
-
-          <!-- Subtitle 2: اگر این رفتارها را از یک نفر ببینی، چقدر برایت Red Flag محسوب می‌شوند؟ -->
-          <p id="hub-card-sub2" class="test-hero-desc">
-            اگر این رفتارها را از یک نفر ببینی، چقدر برایت Red Flag محسوب می‌شوند؟
-          </p>
-
-          <div style="margin-top: 10px;">
-            <span class="test-hero-cta">
-              <span id="hub-card-cta-text">شروع ارزیابی خطوط قرمز</span>
-              <span id="hub-card-cta-arrow">←</span>
-            </span>
-          </div>
-
+        <div class="portal-star-badge">
+          <span class="portal-star-dot"></span>
+          <span class="portal-star-name">song</span>
+          <span class="portal-star-arrow">→</span>
         </div>
+      </a>
 
-        <!-- Card 2: Green Flag یا Red Flag؟ (New 15-Question Test with 3D Flip Card) -->
-        <div id="card-launch-gorf" class="test-hero-card card-gorf" role="button" tabindex="0" title="ورود به آزمون Green Flag یا Red Flag؟">
-          
-          <div style="margin-bottom: 14px;">
-            <span class="badge-gorf-pastel">
-              <span class="badge-gorf-dot-pair">
-                <span class="dot-green-mini"></span>
-                <span class="dot-red-mini"></span>
-              </span>
-              <span id="hub-card-gorf-badge-text">۱۵ سؤال موقعیتی · چرخش ۳بعدی کارت</span>
-            </span>
-          </div>
-
-          <h2 id="hub-card-gorf-title" class="test-hero-title">
-            <span class="card-title-green-gorf">Green Flag</span> یا <span class="card-title-red-gorf">Red Flag</span>؟
-          </h2>
-
-          <p id="hub-card-gorf-sub1" class="test-hero-sub-primary">
-            الگوهای ارتباطی تو بیشتر به کدام سمت گرایش دارند؟
-          </p>
-
-          <p id="hub-card-gorf-sub2" class="test-hero-desc">
-            بررسی الگوهای رفتاری در روابط از طریق ۱۵ موقعیت روان‌شناختی روزمره همراه با چرخش ۳بعدی کارت نتیجه.
-          </p>
-
-          <div style="margin-top: 10px;">
-            <span class="test-hero-cta" style="background: linear-gradient(135deg, #166534 0%, #0F172A 100%);">
-              <span id="hub-card-gorf-cta-text">شروع آزمون Green یا Red</span>
-              <span>←</span>
-            </span>
-          </div>
-
+      <!-- Right Portal Star: "test" -->
+      <a href="test.html" id="portal-star-test" class="portal-star portal-star-test" title="ورود به بخش Test" aria-label="Test Space">
+        <div class="portal-star-figure">
+          <div class="portal-star-halo"></div>
+          <div class="portal-star-flare-h"></div>
+          <div class="portal-star-flare-v"></div>
+          <div class="portal-star-flare-diag"></div>
+          <div class="portal-star-core"></div>
         </div>
-
-        <!-- Card 3: بزرگترین Green Flag تو چیه؟ (New 10-Scenario Elimination Test) -->
-        <div id="card-launch-bgf" class="test-hero-card card-bgf" role="button" tabindex="0" title="ورود به آزمون بزرگترین گرین‌فلگ برای تو چیه؟">
-          
-          <div style="margin-bottom: 14px;">
-            <span class="badge-bgf-pastel">
-              <span class="dot-green-pulse"></span>
-              <span id="hub-card-bgf-badge-text">۱۰ سناریوی واقعی · مقیاس ۱ تا ۱۰</span>
-            </span>
-          </div>
-
-          <h2 id="hub-card-bgf-title" class="test-hero-title">
-            بزرگترین <span class="card-title-green">گرین‌فلگ</span> برای تو چیه؟
-          </h2>
-
-          <p id="hub-card-bgf-sub1" class="test-hero-sub-primary">
-            اگر این رفتارها را از یک نفر ببینی، چقدر برایت ارزشمندند؟
-          </p>
-
-          <p id="hub-card-bgf-sub2" class="test-hero-desc">
-            اگر این رفتارها را از یک نفر ببینی، چقدر برایت Green Flag محسوب می‌شوند؟
-          </p>
-
-          <div style="margin-top: 10px;">
-            <span class="test-hero-cta" style="background: linear-gradient(135deg, #15803D 0%, #0F172A 100%);">
-              <span id="hub-card-bgf-cta-text">شروع ارزیابی رفتارهای امن و بالغانه</span>
-              <span>←</span>
-            </span>
-          </div>
-
+        <div class="portal-star-badge">
+          <span class="portal-star-dot"></span>
+          <span class="portal-star-name">test</span>
+          <span class="portal-star-arrow">→</span>
         </div>
+      </a>
 
-      </div>
-
-    </section>
-
-    <!-- ==================================================================
-         VIEW 2: TEST SETUP (Language Selection & Theme Selection)
-         ================================================================== -->
-    <section id="view-theme" class="view-section" aria-label="تنظیمات آزمون">
-      <div class="theme-select-card">
-        <h2 id="setup-main-headline" class="section-headline">
-          تنظیمات آزمون
-        </h2>
-        <p id="setup-sub-headline" class="section-subheadline">
-          زبان آزمون و ظاهر کارت سؤال را مشخص کنید
-        </p>
-
-        <!-- 1. LANGUAGE SELECTION -->
-        <div class="setup-group-block">
-          <label id="label-lang-select" class="setup-group-label">
-            زبان آزمون / Test Language
-          </label>
-          <div class="lang-options-grid">
-            <div class="lang-option-box is-selected" data-lang="fa" role="button" tabindex="0">
-              <div class="lang-title-row">
-                <span class="lang-code-tag">FA</span>
-                <span class="lang-name-tag">فارسی</span>
-              </div>
-              <div class="theme-radio-circle">
-                <span class="theme-radio-inner"></span>
-              </div>
-            </div>
-            <div class="lang-option-box" data-lang="en" role="button" tabindex="0">
-              <div class="lang-title-row">
-                <span class="lang-code-tag">EN</span>
-                <span class="lang-name-tag">English</span>
-              </div>
-              <div class="theme-radio-circle">
-                <span class="theme-radio-inner"></span>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <!-- 2. THEME SELECTION -->
-        <div class="setup-group-block">
-          <label id="label-theme-select" class="setup-group-label">
-            پوسته کارت سؤال / Card Theme
-          </label>
-          <div class="theme-options-grid">
-            <!-- WHITE PASTEL THEME PREVIEW -->
-            <div class="theme-option-box is-selected" data-theme="white" role="button" tabindex="0">
-              <div class="theme-preview-mini theme-preview-white">
-                <div class="preview-pill-bar"></div>
-                <div class="preview-text-line" id="preview-text-white">پس‌زمینه روشن و مینیمال (پاستیلی)</div>
-                <div class="preview-opt-mini" id="preview-opt-white">مقیاس ۱ تا ۱۰</div>
-              </div>
-              <div class="theme-title-row">
-                <span class="theme-name-tag">WHITE</span>
-                <div class="theme-radio-circle">
-                  <span class="theme-radio-inner"></span>
-                </div>
-              </div>
-            </div>
-
-            <!-- BLACK RUBY THEME PREVIEW -->
-            <div class="theme-option-box" data-theme="black" role="button" tabindex="0">
-              <div class="theme-preview-mini theme-preview-black">
-                <div class="preview-pill-bar"></div>
-                <div class="preview-text-line" id="preview-text-black">پس‌زمینه تیره و مخملی (یاقوتی)</div>
-                <div class="preview-opt-mini" id="preview-opt-black">مقیاس ۱ تا ۱۰</div>
-              </div>
-              <div class="theme-title-row">
-                <span class="theme-name-tag">BLACK</span>
-                <div class="theme-radio-circle">
-                  <span class="theme-radio-inner"></span>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-
-        <button id="btn-start-test" class="btn-primary" type="button">
-          <span id="btn-start-test-text">شروع تست</span>
-          <span id="btn-start-test-arrow">←</span>
-        </button>
-      </div>
-    </section>
-
-    <!-- ==================================================================
-         VIEW 3: ALL QUESTIONS (10 Scenarios · 1 to 10 Simultaneous Rating)
-         ================================================================== -->
-    <section id="view-quiz" class="view-section" aria-label="سؤالات آزمون بزرگترین ردفلگ">
-      <div class="all-questions-container" id="rog-questions-container">
-        
-        <!-- Header Banner -->
-        <div class="test-header-banner">
-          <div style="display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 8px;">
-            <span class="question-brand-stamp" style="font-size: 15px; font-weight: 700;">
-              بزرگترین <span class="stamp-red">ردفلگ</span> برای تو چیه؟
-            </span>
-            <span id="rog-answered-counter" class="answered-counter-pill">
-              ۰ از ۱۰ پاسخ داده شده
-            </span>
-          </div>
-          <p id="rog-quiz-instruction" class="quiz-instruction-text">
-            تمام ۱۰ سناریوی زیر را مطالعه کنید و با آگاهی از همه موقعیت‌ها، در کادر هر سؤال عددی از ۱ تا ۱۰ را که مدنظرتان است انتخاب کنید.
-          </p>
-        </div>
-
-        <!-- 10 Questions Container rendered via JS -->
-        <div id="rog-questions-list" class="all-questions-list">
-          <!-- Injected via JS -->
-        </div>
-
-        <!-- Submit Bar -->
-        <div class="quiz-submit-bar">
-          <button id="btn-submit-rog" class="btn-submit-assessment" type="button">
-            <span id="btn-submit-rog-text">مشاهده نتیجه ارزیابی</span>
-            <span>←</span>
-          </button>
-          <div id="rog-validation-msg" class="quiz-validation-msg" style="display:none;"></div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- ==================================================================
-         VIEW 4: COMPILATION & ANIMATION STAGE (Optional fast transition)
-         ================================================================== -->
-    <section id="view-animation" class="view-section" aria-label="محاسبه و تحلیل رنکینگ">
-      <div class="animation-stage">
-        <p id="animation-subtitle-text" class="animation-subtitle">
-          در حال استخراج کارنامه و رنکینگ انتخاب‌ها...
-        </p>
-        <div id="flipper-card" class="flipper-card-scene">
-          <div class="flipper-card-face flipper-face-red">
-            <span class="flipper-brand-stamp">RED FLAG ASSESSMENT</span>
-            <span class="flipper-face-title">RED FLAG</span>
-            <div class="flipper-face-pill"></div>
-          </div>
-          <div class="flipper-card-face flipper-face-green">
-            <span class="flipper-brand-stamp">RELATIONAL CRITERIA</span>
-            <span class="flipper-face-title">RANKING</span>
-            <div class="flipper-face-pill"></div>
-          </div>
-        </div>
-      </div>
-    </section>
-
-    <!-- ==================================================================
-         VIEW 5: FINAL RESULT PRESENTATION (Biggest & Lowest Flags, 1-10 List, 2-Line Summary)
-         ================================================================== -->
-    <section id="view-result" class="view-section" aria-label="نتیجه ارزیابی">
-      <div id="result-card" class="result-card-clean" dir="rtl">
-
-        <!-- Header -->
-        <div class="result-header-block">
-          <div id="rog-participant-badge" class="participant-badge-pill">
-            انتخاب‌های: <b>مهمان</b>
-        </div>
-        <h2 class="result-main-title" id="rog-result-main-title">
-          نتیجه ارزیابی: از ۱ تا ۱۰
-        </h2>
-      </div>
-
-      <!-- Full 1 to 10 Questions List Section -->
-        <div class="result-scale-list-section">
-          <div class="section-title-clean" id="rog-scale-list-title">
-            <span>انتخاب‌های تو از ۱ تا ۱۰ با سؤال داده شده</span>
-          </div>
-          <div id="ranking-cards-container" class="result-scale-items-list">
-            <!-- Injected via JS: Each item shows number 1..10 with that question -->
-          </div>
-        </div>
-
-        <!-- Two-Line Summary Box -->
-        <div class="result-summary-box-twoline">
-          <div class="summary-twoline-label" id="rog-summary-label">جمع‌بندی ارزیابی:</div>
-          <p id="result-summary-text" class="summary-twoline-text">
-            اولویت‌های شما نشان می‌دهد بالاترین حساسیت را به نقض حریم شخصی، بازی‌های روانی و فرافکنی دارید؛ شفافیت و امنیت روانی خط قرمز مطلق شماست.
-          </p>
-        </div>
-
-        <!-- Action Buttons -->
-        <div class="result-actions-row">
-          <button id="btn-restart" type="button" class="btn-action btn-secondary-action">
-            انجام دوباره تست
-          </button>
-          <button id="btn-share" type="button" class="btn-action btn-primary-action">
-            اشتراک‌گذاری نتیجه
-          </button>
-          <button id="btn-back-hub-rog" type="button" class="btn-action btn-outline-action">
-            بازگشت به آزمون‌ها
-          </button>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- ==================================================================
-         VIEW: GREEN FLAG یا RED FLAG (15 Questions Screen)
-         ================================================================== -->
-    <section id="view-gorf-quiz" class="view-section" aria-label="سؤالات آزمون گرین یا ردفلگ">
-      <div class="gorf-card-container">
-        
-        <!-- Top Delicate Progress Bar (1/15 to 15/15) -->
-        <div class="gorf-progress-wrapper">
-          <div class="gorf-progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100">
-            <div id="gorf-progress-fill" class="gorf-progress-fill" style="width: 6.7%;"></div>
-          </div>
-        </div>
-
-        <!-- Meta Bar: Counter & Test Badge (Zero Category/Header) -->
-        <div class="gorf-meta-row">
-          <span id="gorf-counter-badge" class="gorf-counter-badge">1 / 15</span>
-          <span id="gorf-test-title-stamp" class="gorf-test-title-stamp">Green Flag یا Red Flag؟</span>
-        </div>
-
-        <!-- Question Statement -->
-        <h2 id="gorf-question-text" class="gorf-question-text">
-          در حال بارگذاری سؤال...
-        </h2>
-
-        <!-- Options Container (الف / ب / ج) -->
-        <div id="gorf-options-list" class="gorf-options-list" role="radiogroup" aria-label="گزینه‌های پاسخ">
-          <!-- Injected via JS -->
-        </div>
-
-        <!-- Navigation Buttons: Back & Next -->
-        <div class="gorf-nav-row">
-          <button id="gorf-btn-prev" class="gorf-btn-prev" type="button" disabled>
-            <span class="gorf-btn-prev-text">قبلی</span>
-          </button>
-
-          <button id="gorf-btn-next" class="gorf-btn-next" type="button" disabled>
-            <span class="gorf-btn-next-text">ادامه</span>
-            <span>←</span>
-          </button>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- ==================================================================
-         VIEW: GREEN FLAG یا RED FLAG (Result View with 3D Flip Card)
-         ================================================================== -->
-    <section id="view-gorf-result" class="view-section" aria-label="نتیجه آزمون گرین یا ردفلگ">
-      <div class="gorf-result-card">
-        
-        <div id="gorf-participant-badge" class="participant-badge-pill" style="background:#DCFCE7; border-color:#BBF7D0; color:#166534;">تحلیل الگوهای رفتاری برای: <b>مهمان</b></div>
-        <span class="gorf-result-kicker">تحلیل الگوی پاسخ‌ها و رفتار ارتباطی</span>
-
-        <!-- 3D FLIP CARD SCENE -->
-        <div class="gorf-flip-scene">
-          <div id="gorf-flip-card" class="gorf-flip-card">
-            
-            <!-- Front Face: GREEN -->
-            <div class="gorf-card-face gorf-card-front">
-              <span class="gorf-face-header-stamp">HODOUS RELATIONAL PATTERN</span>
-              <div class="gorf-face-center">
-                <div class="gorf-face-icon-circle">
-                  <span class="gorf-css-check"></span>
-                </div>
-                <div class="gorf-face-title">GREEN</div>
-              </div>
-              <div class="gorf-face-pill"></div>
-            </div>
-
-            <!-- Back Face: RED -->
-            <div class="gorf-card-face gorf-card-back">
-              <span class="gorf-face-header-stamp">HODOUS RELATIONAL PATTERN</span>
-              <div class="gorf-face-center">
-                <div class="gorf-face-icon-circle">
-                  <span class="gorf-css-flag"></span>
-                </div>
-                <div class="gorf-face-title">RED</div>
-              </div>
-              <div class="gorf-face-pill"></div>
-            </div>
-
-          </div>
-        </div>
-
-        <!-- Result Details (Revealed smoothly after 3D flip) -->
-        <div id="gorf-result-details" class="gorf-result-details">
-          
-          <!-- Exact Percentage Readout (e.g. GREEN 78% or RED 64% or GREEN 50% — RED 50%) -->
-          <div id="gorf-percentage-headline" class="gorf-percentage-headline is-green">
-            GREEN 0%
-          </div>
-
-          <!-- Dual Balance Comparison Bar -->
-          <div class="gorf-balance-bar-container">
-            <div class="gorf-balance-bar-track">
-              <div id="gorf-balance-bar-green" class="gorf-balance-bar-green" style="width: 50%;"></div>
-              <div id="gorf-balance-bar-red" class="gorf-balance-bar-red" style="width: 50%;"></div>
-            </div>
-            <div class="gorf-balance-labels">
-              <span id="label-val-green" class="label-val-green">GREEN 50%</span>
-              <span id="label-val-red" class="label-val-red">RED 50%</span>
-            </div>
-          </div>
-
-          <!-- Clean answers breakdown (1 to 15) -->
-          <div style="margin-top: 14px; border-top: 1px solid #E2EFF9; padding-top: 12px;">
-            <div style="font-size: 13px; font-weight: 700; color: #0B223D; margin-bottom: 10px;">
-              ریز انتخاب‌های تو در ۱۵ موقعیت:
-            </div>
-            <div id="gorf-answers-list" style="display: flex; flex-direction: column; gap: 8px;">
-              <!-- Dynamic 15 cards injected via JS -->
-            </div>
-          </div>
-
-          <!-- Action Buttons -->
-          <div class="gorf-actions-grid">
-            <button id="btn-gorf-restart" class="gorf-btn-action gorf-btn-secondary" type="button">
-              <span class="gorf-btn-restart-text">انجام دوباره تست</span>
-            </button>
-            <button id="btn-gorf-share" class="gorf-btn-action gorf-btn-primary" type="button">
-              <span class="gorf-btn-share-text">اشتراک‌گذاری نتیجه</span>
-            </button>
-            <button id="btn-gorf-back-hub" class="gorf-btn-action gorf-btn-secondary" type="button">
-              <span class="gorf-btn-hub-text">بازگشت به آزمون‌ها</span>
-            </button>
-          </div>
-
-        </div>
-
-      </div>
-    </section>
-
-    <!-- ==================================================================
-         VIEW: بزرگترین GREEN FLAG تو چیه؟ (10 Scenarios Simultaneous Rating)
-         ================================================================== -->
-    <section id="view-bgf-quiz" class="view-section" aria-label="سؤالات آزمون گرین‌فلگ">
-      <div class="all-questions-container bgf-theme-container" id="bgf-questions-container">
-        
-        <!-- Header banner -->
-        <div class="test-header-banner">
-          <div style="display: flex; justify-content: space-between; align-items: center; gap: 10px; margin-bottom: 8px;">
-            <span class="bgf-brand-stamp" style="font-size: 15px; font-weight: 700;">
-              بزرگترین <span class="stamp-green">Green Flag</span> برای تو چیه؟
-            </span>
-            <span id="bgf-answered-counter" class="answered-counter-pill badge-green-pill">
-              ۰ از ۱۰ پاسخ داده شده
-            </span>
-          </div>
-          <p id="bgf-quiz-instruction" class="quiz-instruction-text">
-            تمام ۱۰ سناریوی زیر را مطالعه کنید و با آگاهی از همه موقعیت‌ها، در کادر هر سؤال عددی از ۱ تا ۱۰ را که مدنظرتان است انتخاب کنید.
-          </p>
-        </div>
-
-        <!-- 10 Questions Container rendered via JS -->
-        <div id="bgf-questions-list" class="all-questions-list">
-          <!-- Injected via JS -->
-        </div>
-
-        <!-- Submit Bar -->
-        <div class="quiz-submit-bar">
-          <button id="btn-submit-bgf" class="btn-submit-assessment btn-submit-green" type="button">
-            <span id="btn-submit-bgf-text">مشاهده نتیجه ارزیابی</span>
-            <span>←</span>
-          </button>
-          <div id="bgf-validation-msg" class="quiz-validation-msg" style="display:none;"></div>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- ==================================================================
-         VIEW: بزرگترین GREEN FLAG تو چیه؟ (Result View & 1-10 Clean List)
-         ================================================================== -->
-    <section id="view-bgf-result" class="view-section" aria-label="نتیجه آزمون گرین‌فلگ">
-      <div class="bgf-result-card-clean" dir="rtl">
-
-        <!-- Result Header -->
-        <div class="result-header-block">
-          <div id="bgf-participant-badge" class="participant-badge-pill badge-green-pill">
-            انتخاب‌های: <b>مهمان</b>
-          </div>
-          <h2 class="result-main-title text-green-title" id="bgf-result-main-title">
-            نتیجه ارزیابی: از ۱ تا ۱۰
-          </h2>
-        </div>
-
-        <!-- Full 1 to 10 Questions List Section -->
-        <div class="result-scale-list-section">
-          <div class="section-title-clean" id="bgf-scale-list-title">
-            <span>انتخاب‌های تو از ۱ تا ۱۰ با سؤال داده شده</span>
-          </div>
-          <div id="bgf-ranking-list" class="result-scale-items-list">
-            <!-- Injected via JS: Each item shows number 1..10 with that question -->
-          </div>
-        </div>
-
-        <!-- Two-Line Summary Box -->
-        <div class="result-summary-box-twoline bgf-summary-box">
-          <div class="summary-twoline-label" id="bgf-summary-label">جمع‌بندی ارزیابی:</div>
-          <p id="bgf-result-summary-text" class="summary-twoline-text">
-            شما بیشترین ارزش را برای رفتارهای توأم با احترام به مرزها، شنیدن فعال و صداقت بالغانه قائل هستید؛ احساس امنیت و پذیرش بی‌قیدوشرط پایه ارتباط شماست.
-          </p>
-        </div>
-
-        <!-- Action Buttons -->
-        <div class="result-actions-row">
-          <button id="btn-bgf-restart" type="button" class="btn-action btn-secondary-action bgf-btn-secondary">
-            <span class="bgf-btn-restart-text">انجام دوباره تست</span>
-          </button>
-          <button id="btn-bgf-share" type="button" class="btn-action btn-primary-action bgf-btn-primary">
-            <span class="bgf-btn-share-text">اشتراک‌گذاری نتیجه</span>
-          </button>
-          <button id="btn-bgf-back-hub" type="button" class="btn-action btn-outline-action">
-            <span class="bgf-btn-hub-text">بازگشت به آزمون‌ها</span>
-          </button>
-        </div>
-
-      </div>
-    </section>
-
-  
-    <!-- ==================================================================
-         NICKNAME ONBOARDING MODAL
-         ================================================================== -->
-    <div id="modal-nickname" class="nickname-modal-overlay" style="display: none;">
-      <div class="nickname-modal-card" dir="rtl">
-        <div style="margin-bottom: 12px; display: inline-flex; align-items: center; gap: 6px; padding: 4px 14px; border-radius: 999px; background: #E8F4FC; border: 1px solid #C0E6FD; font-size: 11px; font-weight: 500; color: #1B3554;">
-          <span style="width: 6px; height: 6px; border-radius: 50%; background: #5B86B6;"></span>
-          <span id="modal-nickname-test-title">ورود به آزمون</span>
-        </div>
-
-        <h3 style="font-size: 18px; font-weight: 600; color: #0B223D; margin-bottom: 8px;">
-          نام یا نام مستعار شما
-        </h3>
-
-        <p style="font-size: 13px; color: #5B86B6; line-height: 1.6; margin-bottom: 18px;">
-          برای ثبت نتایج در کارنامه و نمایش کارت اختصاصی تحلیل، لطفاً نام یا نام مستعار خود را وارد کنید:
-        </p>
-
-        <div style="margin-bottom: 18px;">
-          <input type="text" id="participant-nickname-input" placeholder="مثلاً: نیما، رها، ستاره..." maxlength="25" style="width: 100%; padding: 12px 16px; border-radius: 16px; border: 1.5px solid #C0E6FD; background: #FFFFFF; font-size: 14px; color: #0B223D; outline: none; text-align: right; box-shadow: 0 2px 8px rgba(27, 53, 84, 0.05); font-family:inherit;" />
-        </div>
-
-        <div style="display: flex; gap: 10px; justify-content: flex-start;">
-          <button type="button" id="btn-confirm-nickname" style="flex: 1; padding: 12px 20px; border-radius: 16px; background: #1B3554; color: #FFFFFF; font-size: 13px; font-weight: 600; border: none; cursor: pointer; transition: all 0.2s; font-family:inherit; box-shadow: 0 4px 14px rgba(27, 53, 84, 0.25);">
-            ورود به ارزیابی ←
-          </button>
-          <button type="button" id="btn-cancel-nickname" style="padding: 12px 18px; border-radius: 16px; background: #F0F7FD; color: #5B86B6; font-size: 13px; font-weight: 500; border: 1px solid #C0E6FD; cursor: pointer; transition: all 0.2s; font-family:inherit;">
-            انصراف
-          </button>
-        </div>
-      </div>
     </div>
 
-    <!-- ==================================================================
-         RESULTS ARCHIVE MODAL (View Past Participants)
-         ================================================================== -->
-    <div id="modal-results-log" class="nickname-modal-overlay" style="display: none;">
-      <div class="nickname-modal-card" style="max-width: 640px; width: 95%; max-height: 88vh; display: flex; flex-direction: column;" dir="rtl">
-        <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; border-bottom: 1px solid #E0EEF9; padding-bottom: 10px;">
-          <div>
-            <h3 style="font-size: 17px; font-weight: 700; color: #0B223D; display: flex; align-items: center; gap: 8px; margin: 0;">
-              <span>🔒</span>
-              <span>پنل مدیریت نتایج و پاسخ‌ها</span>
-            </h3>
-            <span style="font-size: 11px; color: #5B86B6; margin-top: 2px; display: inline-block;">
-              فقط این دستگاه مجاز به مشاهده ریز انتخاب‌های شرکت‌کنندگان است
+    <!-- Main Content Flow -->
+    <main class="relative z-10 w-full max-w-4xl mx-auto px-6 pt-24 sm:pt-28 pb-10 flex flex-col items-center">
+
+      <!-- ================================================================
+           HODOUS TITLE (Apple SF Pro Medium, Elegant Navy on Light Blue)
+           ================================================================ -->
+      <section class="relative text-center select-none pt-4 pb-4">
+        <!-- Soft Radiant Glow Behind Title -->
+        <div class="title-faint-glow"></div>
+
+        <h1 class="hodous-hero-title relative z-10">
+          Hodous
+        </h1>
+      </section>
+
+      <!-- ================================================================
+           CARL SAGAN QUOTE (Click to Reveal Persian Translation)
+           ================================================================ -->
+      <section id="quote-section" class="w-full max-w-2xl mx-auto py-4 sm:py-6 text-center">
+        <div id="quote-box" class="quote-interactive-box group" title="Click to reveal translation">
+          <blockquote class="quote-text text-lg sm:text-xl md:text-[22px] italic leading-relaxed">
+            “Somewhere, something incredible is waiting to be known.”
+          </blockquote>
+
+          <div class="quote-author mt-2.5 flex items-center justify-center gap-2">
+            <span>— CARL SAGAN</span>
+            <span class="text-[10px] text-[#3F6593] font-normal tracking-normal opacity-75 group-hover:opacity-100 transition-opacity">
+              (click for translation)
             </span>
           </div>
-          <button type="button" id="btn-close-results-log" style="font-size: 18px; color: #80AAD3; background: transparent; border: none; cursor: pointer; padding: 4px;">
-            ✕
-          </button>
+
+          <!-- Persian Translation in San Francisco Arabic -->
+          <div id="quote-persian-reveal" class="quote-persian-reveal">
+            <p class="text-sm sm:text-base font-normal leading-relaxed">
+              «جایی، چیزی شگفت‌انگیز در انتظار شناخته شدن است.»
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <!-- ================================================================
+           INTERACTIVE DOOR 
+           - Inside door & door leaf remain DARK
+           - Surrounding door has only minimal Midnight Blue halo
+           ================================================================ -->
+      <section id="door-section" class="w-full max-w-md mx-auto door-ambient-zone">
+        
+        <!-- Localized minimal Midnight Blue halo strictly around door -->
+        <div class="door-midnight-halo"></div>
+
+        <!-- Instruction & Animated Pure CSS Arrow ("open the door" in Hodous font) -->
+        <div class="door-instruction-wrap">
+          <span class="door-instruction-text">open the door</span>
+          <div class="door-css-arrow">
+            <div class="door-css-arrow-stem"></div>
+            <div class="door-css-arrow-head"></div>
+          </div>
         </div>
 
-        <!-- Webhook Integration Card for Google Sheets -->
-        <div style="background:#F0F7FD; border:1px solid #C0E6FD; border-radius:14px; padding:10px 14px; margin-bottom:12px; font-size:11px; color:#1B3554;">
-          <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px;">
-            <span style="font-weight:700;">📡 ثبت خودکار انتخاب‌های بقیه افراد در Google Sheets:</span>
-            <button type="button" id="btn-save-webhook-url" style="background:#1B3554; color:#fff; border:none; border-radius:8px; padding:3px 12px; cursor:pointer; font-size:10px; font-weight:600;">ذخیره وب‌هوک</button>
+        <!-- Architectural Minimalist 3D Half-Open Door -->
+        <div id="interactive-door" class="door-installation" title="Click to open the door">
+          <!-- Outer Trim Frame -->
+          <div class="door-frame"></div>
+
+          <!-- Glowing Threshold Line -->
+          <div class="door-threshold"></div>
+
+          <!-- Inside the Door: Deep Cosmic Void (Dark tone preserved) -->
+          <div class="door-interior-void">
+            <!-- Dedicated Constellation Canvas Inside Door (Zero SVG) -->
+            <canvas id="delphinus-canvas"></canvas>
           </div>
-          <p style="font-size:10.5px; color:#5B86B6; margin:0 0 6px 0; line-height:1.4;">
-            برای اینکه آزمون‌هایی که دیگران روی گوشی خود می‌دهند مستقیماً به اکسل شما بیاید، آدرس Webhook را اینجا بگذارید:
+
+          <!-- Volumetric Floor Light Beam -->
+          <div class="door-light-beam"></div>
+
+          <!-- 3D Ajar Door Leaf (Remains Dark) -->
+          <div id="door-leaf" class="door-leaf">
+            <div class="door-handle"></div>
+          </div>
+        </div>
+
+        <!-- Scientific Astronomical Observation Caption -->
+        <div id="delphinus-caption" class="astronomy-caption text-center mt-3 sm:mt-4 space-y-0.5">
+          <p class="text-[#000F22] font-semibold tracking-[0.16em] uppercase">
+            Delphinus · August Sky
           </p>
-          <input type="text" id="input-webhook-url" placeholder="https://script.google.com/macros/s/.../exec" style="width:100%; padding:6px 10px; border-radius:8px; border:1px solid #C0E6FD; font-size:11px; direction:ltr; outline:none; background:#fff;" />
+          <p class="text-[10px] text-[#3F6593] tracking-[0.24em] uppercase font-medium">
+            RA 20h 39m · Dec +11°
+          </p>
         </div>
 
-        <div id="results-log-list" style="flex: 1; max-height: 360px; overflow-y: auto; display: flex; flex-direction: column; gap: 10px; margin-bottom: 12px; padding-left: 4px;">
-          <!-- Populated by JS -->
-        </div>
+      </section>
 
-        <div style="display: flex; justify-content: space-between; align-items: center; font-size: 11px; border-top: 1px solid #E0EEF9; padding-top: 10px;">
-          <div style="display: flex; gap: 14px; align-items: center;">
-            <button type="button" id="btn-clear-results-log" style="color: #DC2626; background: transparent; border: none; cursor: pointer; font-size: 11px;">
-              🗑 پاکسازی تاریخچه
-            </button>
-            <button type="button" id="btn-exit-admin-mode" style="color: #64748B; background: transparent; border: none; cursor: pointer; font-size: 11px;">
-              🔴 خروج از حالت مدیر در این دستگاه
-            </button>
-          </div>
-          <span id="results-log-count" style="color: #5B86B6; font-size: 11px; font-weight: 600;">
-            ۰ نتیجه ثبت شده
-          </span>
-        </div>
-      </div>
-    </div>
-
-  </main>
-
-  <!-- Notification Toast for Share Fallback -->
-  <div id="share-toast" class="share-toast" role="status" aria-live="polite">
-    رنکینگ در کلیپ‌بورد کپی شد
+    </main>
   </div>
 
-  <!-- Assessment Logic Scripts (Zero External Dependencies) -->
-  
-  <!-- Hodous Global Test Hub & Participant Tracker (Zero SVG) -->
-  <script>
-    window.HodousTestHub = {
-      getNickname: function() {
-        return sessionStorage.getItem('hodous_nickname') || '';
-      },
-      setNickname: function(name) {
-        sessionStorage.setItem('hodous_nickname', name);
-      },
-      promptNickname: function(testTitle, onProceed) {
-        const modal = document.getElementById('modal-nickname');
-        const input = document.getElementById('participant-nickname-input');
-        const confirmBtn = document.getElementById('btn-confirm-nickname');
-        const cancelBtn = document.getElementById('btn-cancel-nickname');
-        const titleEl = document.getElementById('modal-nickname-test-title');
+  <!-- ====================================================================
+       MINIMAL FOOTER (Light Theme)
+       ==================================================================== -->
+  <footer class="site-footer">
+    <div class="max-w-4xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4 text-center sm:text-left">
+      <div class="space-y-1">
+        <span class="text-[15px] font-semibold tracking-tight text-[#000F22]">
+          Hodous
+        </span>
+        <p class="text-xs text-[#3F6593] font-normal">
+          A contemplation of science, depth, and time.
+        </p>
+      </div>
 
-        if (!modal || !input) {
-          if (onProceed) onProceed('مهمان');
-          return;
-        }
+      <div class="text-xs text-[#5B86B6] font-normal tracking-wider">
+        © 2026 Hodous. All rights reserved.
+      </div>
+    </div>
+  </footer>
 
-        if (titleEl) titleEl.textContent = testTitle || 'ورود به آزمون';
-        const current = window.HodousTestHub.getNickname();
-        if (current) input.value = current;
-
-        modal.style.display = 'flex';
-        setTimeout(() => input.focus(), 150);
-
-        const handleConfirm = () => {
-          const val = input.value.trim() || 'مهمان کهکشانی';
-          window.HodousTestHub.setNickname(val);
-          modal.style.display = 'none';
-          cleanup();
-          if (onProceed) onProceed(val);
-        };
-
-        const handleCancel = () => {
-          modal.style.display = 'none';
-          cleanup();
-        };
-
-        const handleKey = (e) => {
-          if (e.key === 'Enter') {
-            e.preventDefault();
-            handleConfirm();
-          } else if (e.key === 'Escape') {
-            handleCancel();
-          }
-        };
-
-        function cleanup() {
-          confirmBtn.removeEventListener('click', handleConfirm);
-          cancelBtn.removeEventListener('click', handleCancel);
-          input.removeEventListener('keydown', handleKey);
-        }
-
-        confirmBtn.addEventListener('click', handleConfirm);
-        cancelBtn.addEventListener('click', handleCancel);
-        input.addEventListener('keydown', handleKey);
-      },
-
-      saveResult: function(data) {
-        const name = data.nickname || window.HodousTestHub.getNickname() || 'مهمان';
-        const entry = {
-          id: 'res_' + Date.now(),
-          testId: data.testId,
-          testTitle: data.testTitle,
-          nickname: name,
-          score: data.score,
-          details: data.details || '',
-          choices: data.choices || [],
-          dateStr: new Date().toLocaleDateString('fa-IR'),
-          timeStr: new Date().toLocaleTimeString('fa-IR', { hour: '2-digit', minute: '2-digit' }),
-          timestamp: Date.now()
-        };
-
-        try {
-          const list = JSON.parse(localStorage.getItem('hodous_results_archive') || '[]');
-          list.unshift(entry);
-          localStorage.setItem('hodous_results_archive', JSON.stringify(list.slice(0, 100)));
-        } catch (e) {}
-
-        const webhookUrl = localStorage.getItem('hodous_webhook_url');
-        if (webhookUrl) {
-          try {
-            fetch(webhookUrl, {
-              method: 'POST',
-              mode: 'no-cors',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify(entry)
-            }).catch(() => {});
-          } catch (e) {}
-        }
-
-        return entry;
-      },
-
-      generateShareUrl: function(testId, scoreText) {
-        const name = window.HodousTestHub.getNickname() || 'مهمان';
-        const url = new URL(window.location.href);
-        url.searchParams.set('user', name);
-        url.searchParams.set('test', testId);
-        url.searchParams.set('score', scoreText);
-        return url.toString();
-      }
-    };
-
-    // Results Archive & Device Admin Protection Logic
-    document.addEventListener('DOMContentLoaded', () => {
-      const openBtn = document.getElementById('btn-open-results-log');
-      const closeBtn = document.getElementById('btn-close-results-log');
-      const clearBtn = document.getElementById('btn-clear-results-log');
-      const exitAdminBtn = document.getElementById('btn-exit-admin-mode');
-      const modal = document.getElementById('modal-results-log');
-      const listContainer = document.getElementById('results-log-list');
-      const countEl = document.getElementById('results-log-count');
-      const webhookInput = document.getElementById('input-webhook-url');
-      const saveWebhookBtn = document.getElementById('btn-save-webhook-url');
-      const bannerEl = document.getElementById('url-param-banner');
-      const secretTrigger = document.getElementById('admin-secret-trigger') || document.querySelector('.test-page-title');
-
-      // 1. Device Admin Identification & Activation
-      const urlParams = new URLSearchParams(window.location.search);
-      if (urlParams.get('admin') === 'hodous' || urlParams.get('admin') === 'true' || urlParams.get('admin') === '1') {
-        localStorage.setItem('hodous_device_is_admin', 'true');
-        try {
-          const cleanUrl = window.location.pathname;
-          window.history.replaceState({}, document.title, cleanUrl);
-        } catch (e) {}
-      }
-
-      function isDeviceAdmin() {
-        return localStorage.getItem('hodous_device_is_admin') === 'true';
-      }
-
-      function updateAdminUI() {
-        if (openBtn) {
-          openBtn.style.display = isDeviceAdmin() ? 'inline-flex' : 'none';
-        }
-      }
-
-      updateAdminUI();
-
-      // Secret Gesture: 3 rapid clicks on "Test" title within 1.5 seconds
-      let clickCount = 0;
-      let clickTimer = null;
-      if (secretTrigger) {
-        secretTrigger.addEventListener('click', () => {
-          clickCount++;
-          clearTimeout(clickTimer);
-          clickTimer = setTimeout(() => { clickCount = 0; }, 1500);
-
-          if (clickCount >= 3) {
-            clickCount = 0;
-            if (isDeviceAdmin()) {
-              renderResultsArchive();
-              if (modal) modal.style.display = 'flex';
-            } else {
-              const pass = prompt('ورود به پنل مدیریت (فقط صاحب دستگاه):\nلطفاً رمز عبور را وارد کنید:');
-              if (pass === '1234' || pass === 'hodous' || pass === 'admin') {
-                localStorage.setItem('hodous_device_is_admin', 'true');
-                updateAdminUI();
-                alert('این دستگاه با موفقیت به عنوان دستگاه مدیر تأیید شد!\nدکمه پنل مدیریت فقط در همین دستگاه شما فعال شد.');
-                renderResultsArchive();
-                if (modal) modal.style.display = 'flex';
-              } else if (pass !== null) {
-                alert('رمز اشتباه است.');
-              }
-            }
-          }
-        });
-      }
-
-      if (exitAdminBtn) {
-        exitAdminBtn.addEventListener('click', () => {
-          if (confirm('آیا می‌خواهید دسترسی مدیر از این دستگاه برداشته شود؟ (دکمه پنل مخفی خواهد شد)')) {
-            localStorage.removeItem('hodous_device_is_admin');
-            updateAdminUI();
-            if (modal) modal.style.display = 'none';
-            alert('حالت مدیر در این دستگاه غیرفعال شد. برای فعال‌سازی مجدد، می‌توانید ۳ بار روی عنوان Test کلیک کنید.');
-          }
-        });
-      }
-
-      // Check query parameters for shared result view (Only if user param present)
-      const qUser = urlParams.get('user');
-      const qTest = urlParams.get('test');
-      const qScore = urlParams.get('score');
-
-      if (qUser && bannerEl) {
-        bannerEl.style.display = 'block';
-        bannerEl.innerHTML = `
-          <div style="display:flex; justify-content:space-between; align-items:center;">
-            <div>
-              <span style="font-weight:700;">کارنامه اشتراک‌گذاشته شده:</span>
-              <span>نتیجه آزمون برای <b>${escapeHTML(qUser)}</b></span>
-              ${qScore ? ` — نتیجه: <span style="background:rgba(255,255,255,0.25); padding:2px 8px; border-radius:8px;">${escapeHTML(qScore)}</span>` : ''}
-            </div>
-            <a href="test.html" style="color:#C0E6FD; font-size:11px; text-decoration:underline;">شروع آزمون جدید</a>
-          </div>
-        `;
-      }
-
-      if (webhookInput) {
-        webhookInput.value = localStorage.getItem('hodous_webhook_url') || '';
-      }
-
-      if (saveWebhookBtn && webhookInput) {
-        saveWebhookBtn.addEventListener('click', () => {
-          const val = webhookInput.value.trim();
-          localStorage.setItem('hodous_webhook_url', val);
-          alert('آدرس وب‌هوک ذخیره شد! نتایج آزمون‌های شرکت‌کنندگان از این پس به گوگل‌شیت شما ارسال می‌شود.');
-        });
-      }
-
-      function escapeHTML(str) {
-        if (!str) return '';
-        const d = document.createElement('div');
-        d.textContent = str;
-        return d.innerHTML;
-      }
-
-      function renderResultsArchive() {
-        if (!listContainer) return;
-        let list = [];
-        try {
-          list = JSON.parse(localStorage.getItem('hodous_results_archive') || '[]');
-        } catch (e) {}
-
-        if (countEl) countEl.textContent = `${list.length} نتیجه ثبت شده`;
-
-        if (list.length === 0) {
-          listContainer.innerHTML = `
-            <div style="padding:24px; text-align:center; color:#80AAD3; font-size:12px; background:#F4F9FD; border-radius:16px; line-height:1.6;">
-              هنوز نتیجه‌ای ثبت نشده است. با تکمیل آزمون‌ها، کارنامه افراد و تک‌تک انتخاب‌هایشان در اینجا لیست می‌شود.
-            </div>
-          `;
-          return;
-        }
-
-        listContainer.innerHTML = '';
-        list.forEach((item, index) => {
-          const card = document.createElement('div');
-          card.style.cssText = "background:#FFFFFF; border:1px solid #C0E6FD; border-radius:14px; padding:12px 14px; font-size:12px; box-shadow:0 2px 6px rgba(27,53,84,0.03);";
-
-          const hasChoices = item.choices && Array.isArray(item.choices) && item.choices.length > 0;
-
-          card.innerHTML = `
-            <div style="display:flex; align-items:center; justify-content:space-between; gap:8px;">
-              <div style="display:flex; align-items:center; gap:8px;">
-                <span style="width:9px; height:9px; border-radius:50%; background:#1B3554; display:inline-block;"></span>
-                <div>
-                  <span style="font-weight:700; color:#0B223D; font-size:13px;">${escapeHTML(item.nickname)}</span>
-                  <span style="color:#5B86B6; margin:0 4px;">•</span>
-                  <span style="color:#3F6593; font-weight:500;">${escapeHTML(item.testTitle)}</span>
-                </div>
-              </div>
-              <div style="display:flex; align-items:center; gap:8px;">
-                <span style="font-weight:600; color:#1B3554; background:#E8F4FC; padding:3px 10px; border-radius:8px; font-size:11px;">${escapeHTML(item.score)}</span>
-                <span style="font-size:10px; color:#80AAD3;">${escapeHTML(item.dateStr || '')} ${escapeHTML(item.timeStr || '')}</span>
-              </div>
-            </div>
-
-            <div style="margin-top:8px; display:flex; gap:8px; align-items:center;">
-              <button type="button" class="btn-toggle-choices-${index}" style="background:#F0F7FD; border:1px solid #C0E6FD; color:#1B3554; border-radius:8px; padding:4px 12px; font-size:11px; cursor:pointer; font-family:inherit; font-weight:600; display:inline-flex; align-items:center; gap:4px;">
-                <span>${hasChoices ? `🔍 مشاهده انتخاب‌ها (${item.choices.length} سؤال) ▼` : '🔍 مشاهده خلاصه ▼'}</span>
-              </button>
-            </div>
-
-            <div id="choices-details-${index}" style="display:none; margin-top:10px; padding:12px; background:#F8FBFE; border-radius:10px; border:1px solid #E2EFF9; font-size:11px;">
-              ${hasChoices ? `
-                <div style="font-weight:700; color:#0B223D; margin-bottom:8px; font-size:11.5px;">تک‌تک گزینه‌ها و پاسخ‌های ${escapeHTML(item.nickname)}:</div>
-                <div style="display:flex; flex-direction:column; gap:6px;">
-                  ${item.choices.map(c => `
-                    <div style="padding:6px 10px; background:#FFFFFF; border-radius:8px; border:1px solid #E4EFF8;">
-                      <div style="font-weight:600; color:#1B3554; margin-bottom:3px; font-size:11px;">
-                        [سؤال ${c.qNum}] ${escapeHTML(c.title || c.question)}
-                      </div>
-                      <div style="color:#0B223D; background:#F0F7FD; padding:3px 8px; border-radius:6px; font-size:11px; line-height:1.4;">
-                        <b>انتخاب:</b> ${escapeHTML(c.choice)}
-                      </div>
-                    </div>
-                  `).join('')}
-                </div>
-              ` : `
-                <div style="color:#5B86B6; line-height:1.5;">
-                  ${escapeHTML(item.details || 'جزئیات گزینه‌ها ثبت نشده است.')}
-                </div>
-              `}
-            </div>
-          `;
-
-          const toggleBtn = card.querySelector(`.btn-toggle-choices-${index}`);
-          const detailsBox = card.querySelector(`#choices-details-${index}`);
-          if (toggleBtn && detailsBox) {
-            toggleBtn.addEventListener('click', () => {
-              const isHidden = detailsBox.style.display === 'none';
-              detailsBox.style.display = isHidden ? 'block' : 'none';
-              toggleBtn.innerHTML = isHidden
-                ? `<span>▲ بستن انتخاب‌ها</span>`
-                : `<span>${hasChoices ? `🔍 مشاهده انتخاب‌ها (${item.choices.length} سؤال) ▼` : '🔍 مشاهده خلاصه ▼'}</span>`;
-            });
-          }
-
-          listContainer.appendChild(card);
-        });
-      }
-
-      if (openBtn && modal) {
-        openBtn.addEventListener('click', () => {
-          renderResultsArchive();
-          modal.style.display = 'flex';
-        });
-      }
-
-      if (closeBtn && modal) {
-        closeBtn.addEventListener('click', () => {
-          modal.style.display = 'none';
-        });
-      }
-
-      if (clearBtn) {
-        clearBtn.addEventListener('click', () => {
-          if (confirm('آیا می‌خواهید تمامی نتایج ذخیره‌شده پاک شوند؟')) {
-            localStorage.removeItem('hodous_results_archive');
-            renderResultsArchive();
-          }
-        });
-      }
-    });
-  </script>
-
-  <script src="red-or-green.js"></script>
-  <script src="green-or-red.js"></script>
-  <script src="biggest-green-flag.js"></script>
+  <!-- Starfield, Delphinus Constellation & Interaction Script -->
+  <script src="script.js"></script>
 </body>
 </html>
