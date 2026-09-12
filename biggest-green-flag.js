@@ -138,12 +138,13 @@
       hubSub2: 'اگر این رفتارها را از یک نفر ببینی، چقدر برایت Green Flag محسوب می‌شوند؟',
       hubCta: 'شروع ارزیابی رفتارهای امن و بالغانه',
       cardStamp: 'بزرگترین <span class="stamp-green">Green Flag</span> برای تو چیه؟',
-      quizInstruction: 'تمام ۱۰ سناریوی زیر را مطالعه کنید و با آگاهی از همه موقعیت‌ها، در کادر هر سؤال عددی از ۱ تا ۱۰ را که مدنظرتان است انتخاب کنید.',
+      quizInstruction: 'تمام ۱۰ سناریوی زیر را مطالعه کنید و به هر سؤال یک امتیاز از ۱ تا ۱۰ اختصاص دهید. هر عدد از ۱ تا ۱۰ باید فقط یک‌بار انتخاب شود.',
       ratingBoxLabel: 'کادر انتخاب عدد (از ۱ تا ۱۰):',
       notSelected: 'انتخاب نشده',
       scorePrefix: 'امتیاز',
       answeredCount: (curr, total) => `${curr} از ${total} پاسخ داده شده`,
       validationMissing: (count) => `لطفاً به تمام ۱۰ سؤال پاسخ دهید (${count} سؤال باقی‌مانده است).`,
+      validationUnique: 'لطفاً به تمام ۱۰ سؤال پاسخ دهید. هر عدد از ۱ تا ۱۰ باید دقیقاً یک‌بار انتخاب شود (بدون تکرار).',
       submitBtn: 'مشاهده نتیجه ارزیابی',
       biggestSectionTitle: 'بزرگترین گرین‌فلگ تو چیست؟',
       lowestSectionTitle: 'کمترین گرین‌فلگ تو چیست؟',
@@ -162,12 +163,13 @@
       hubSub2: 'Review all scenarios and rate each behavior on a 1-to-10 scale.',
       hubCta: 'Start Green Flag Assessment',
       cardStamp: 'What is your biggest <span class="stamp-green">Green Flag</span>?',
-      quizInstruction: 'Review all 10 scenarios below and select any number from 1 to 10 for each question.',
+      quizInstruction: 'Review all 10 scenarios below and assign a rating from 1 to 10 to each question. Each number from 1 to 10 must be chosen only once.',
       ratingBoxLabel: 'Rating selector box (1 to 10):',
       notSelected: 'Not selected',
       scorePrefix: 'Score',
       answeredCount: (curr, total) => `${curr} of ${total} answered`,
       validationMissing: (count) => `Please assign a rating to all 10 questions (${count} remaining).`,
+      validationUnique: 'Please answer all 10 questions. Each number from 1 to 10 must be chosen exactly once without repetition.',
       submitBtn: 'View Assessment Results',
       biggestSectionTitle: 'What is your biggest Green Flag?',
       lowestSectionTitle: 'What is your lowest Green Flag?',
@@ -350,14 +352,14 @@
       buttons.forEach(btn => {
         btn.addEventListener('click', () => {
           const val = Number(btn.dataset.val);
-          selectQuestionRating(idx, val, card, buttons, selectEl);
+          selectQuestionRating(idx, val);
         });
       });
 
       selectEl.addEventListener('change', (e) => {
         const val = parseInt(e.target.value, 10);
         if (isNaN(val)) return;
-        selectQuestionRating(idx, val, card, buttons, selectEl);
+        selectQuestionRating(idx, val);
       });
 
       bgfQuestionsList.appendChild(card);
@@ -366,28 +368,60 @@
     updateAnsweredCount();
   }
 
-  function selectQuestionRating(qIdx, val, cardEl, buttons, selectEl) {
-    playSubtleClick(500 + val * 30);
+  function updateBgfQuestionCardUI(qIdx) {
+    const card = document.getElementById(`bgf-q-card-${qIdx}`);
+    if (!card) return;
+    const val = bgfState.answers[qIdx];
+    const isAnswered = (val !== undefined && val !== null);
+    card.classList.toggle('is-answered', isAnswered);
+    card.classList.remove('is-highlight-missing');
 
-    bgfState.answers[qIdx] = val;
-
-    buttons.forEach(b => {
-      b.classList.toggle('is-selected', Number(b.dataset.val) === val);
-    });
-
-    if (selectEl && Number(selectEl.value) !== val) {
-      selectEl.value = String(val);
+    const selectEl = card.querySelector('.q-select-box');
+    if (selectEl) {
+      selectEl.value = isAnswered ? String(val) : '';
     }
 
-    cardEl.classList.add('is-answered');
-    cardEl.classList.remove('is-highlight-missing');
+    const buttons = card.querySelectorAll('.q-pill-btn');
+    buttons.forEach(b => {
+      b.classList.toggle('is-selected', isAnswered && Number(b.dataset.val) === val);
+    });
 
     const badge = document.getElementById(`bgf-val-badge-${qIdx}`);
     const lang = getCurrentLang();
     const t = BGF_UI[lang] || BGF_UI.fa;
     if (badge) {
-      badge.textContent = `${t.scorePrefix}: ${val}`;
+      badge.textContent = isAnswered ? `${t.scorePrefix}: ${val}` : t.notSelected;
     }
+  }
+
+  function selectQuestionRating(qIdx, val) {
+    playSubtleClick(500 + val * 30);
+
+    const oldVal = bgfState.answers[qIdx];
+
+    // Check if another question already uses this number (each number 1..10 must be chosen only once)
+    let duplicateIdx = -1;
+    for (let i = 0; i < BGF_SCENARIOS.length; i++) {
+      if (i !== qIdx && bgfState.answers[i] === val) {
+        duplicateIdx = i;
+        break;
+      }
+    }
+
+    if (duplicateIdx !== -1) {
+      if (oldVal !== undefined && oldVal !== null) {
+        // Swap values between questions
+        bgfState.answers[duplicateIdx] = oldVal;
+      } else {
+        // Clear duplicate question so number is uniquely assigned
+        delete bgfState.answers[duplicateIdx];
+      }
+      updateBgfQuestionCardUI(duplicateIdx);
+    }
+
+    bgfState.answers[qIdx] = val;
+
+    updateBgfQuestionCardUI(qIdx);
 
     if (bgfValidationMsg) {
       bgfValidationMsg.style.display = 'none';
@@ -414,7 +448,10 @@
       }
     }
 
-    if (unanswered.length > 0) {
+    const chosenVals = Object.values(bgfState.answers).map(Number);
+    const uniqueVals = new Set(chosenVals);
+
+    if (unanswered.length > 0 || uniqueVals.size < BGF_SCENARIOS.length) {
       unanswered.forEach(idx => {
         const card = document.getElementById(`bgf-q-card-${idx}`);
         if (card) {
@@ -422,7 +459,7 @@
         }
       });
 
-      const firstCard = document.getElementById(`bgf-q-card-${unanswered[0]}`);
+      const firstCard = unanswered.length > 0 ? document.getElementById(`bgf-q-card-${unanswered[0]}`) : null;
       if (firstCard) {
         firstCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
       }
@@ -430,7 +467,7 @@
       const lang = getCurrentLang();
       const t = BGF_UI[lang] || BGF_UI.fa;
       if (bgfValidationMsg) {
-        bgfValidationMsg.textContent = t.validationMissing(unanswered.length);
+        bgfValidationMsg.textContent = unanswered.length > 0 ? t.validationMissing(unanswered.length) : t.validationUnique;
         bgfValidationMsg.style.display = 'block';
       }
       return;
