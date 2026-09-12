@@ -668,34 +668,39 @@
             </span>
           </div>
           <div class="q-numbers-row">
-            ${Array.from({ length: 10 }, (_, i) => i + 1).map(num => `
-              <button type="button" class="q-pill-btn ${currentVal === num ? 'is-selected' : ''}" data-q="${idx}" data-val="${num}">
-                ${num}
-              </button>
-            `).join('')}
-            <input type="number" min="1" max="10" class="q-number-input-box" placeholder="۱..۱۰" data-q="${idx}" value="${currentVal || ''}" aria-label="Rating for question ${idx + 1}">
+            <select class="q-select-box" data-q="${idx}" aria-label="رتبه سؤال ${idx + 1}">
+              <option value="">انتخاب عدد (۱ تا ۱۰)...</option>
+              ${Array.from({ length: 10 }, (_, i) => i + 1).map(num => `
+                <option value="${num}" ${currentVal === num ? 'selected' : ''}>
+                  ${num} ${num === 1 ? '(کمترین)' : num === 10 ? '(بزرگترین)' : ''}
+                </option>
+              `).join('')}
+            </select>
+            <div class="q-pills-group">
+              ${Array.from({ length: 10 }, (_, i) => i + 1).map(num => `
+                <button type="button" class="q-pill-btn ${currentVal === num ? 'is-selected' : ''}" data-q="${idx}" data-val="${num}">
+                  ${num}
+                </button>
+              `).join('')}
+            </div>
           </div>
         </div>
       `;
 
-      // Event listeners for buttons
+      const selectEl = card.querySelector('.q-select-box');
       const buttons = card.querySelectorAll('.q-pill-btn');
-      const input = card.querySelector('.q-number-input-box');
 
       buttons.forEach(btn => {
         btn.addEventListener('click', () => {
           const val = Number(btn.dataset.val);
-          selectQuestionRating(idx, val, card, buttons, input);
+          selectQuestionRating(idx, val, card, buttons, selectEl);
         });
       });
 
-      input.addEventListener('input', (e) => {
-        let val = parseInt(e.target.value, 10);
+      selectEl.addEventListener('change', (e) => {
+        const val = parseInt(e.target.value, 10);
         if (isNaN(val)) return;
-        if (val < 1) val = 1;
-        if (val > 10) val = 10;
-        e.target.value = val;
-        selectQuestionRating(idx, val, card, buttons, input);
+        selectQuestionRating(idx, val, card, buttons, selectEl);
       });
 
       rogQuestionsList.appendChild(card);
@@ -704,7 +709,7 @@
     updateAnsweredCount();
   }
 
-  function selectQuestionRating(qIdx, val, cardEl, buttons, inputEl) {
+  function selectQuestionRating(qIdx, val, cardEl, buttons, selectEl) {
     initAudio();
     playScaleSelectSound(val);
 
@@ -715,8 +720,8 @@
       b.classList.toggle('is-selected', Number(b.dataset.val) === val);
     });
 
-    if (inputEl && Number(inputEl.value) !== val) {
-      inputEl.value = val;
+    if (selectEl && Number(selectEl.value) !== val) {
+      selectEl.value = String(val);
     }
 
     cardEl.classList.add('is-answered');
@@ -797,25 +802,11 @@
 
     if (items.length === 0) return;
 
-    // 1. Highlight: Biggest Red Flag (highest score)
+    const minScore = Math.min(...items.map(it => it.num));
     const maxScore = Math.max(...items.map(it => it.num));
+    const lowestItem = items.find(it => it.num === minScore) || items[0];
     const biggestItem = items.slice().reverse().find(it => it.num === maxScore) || items[items.length - 1];
 
-    if (rogBiggestTitle) rogBiggestTitle.textContent = biggestItem.title;
-    if (rogBiggestScoreBadge) rogBiggestScoreBadge.textContent = `${biggestItem.num} / 10`;
-    if (rogBiggestScenario) rogBiggestScenario.textContent = biggestItem.question;
-    if (rogBiggestTag) rogBiggestTag.textContent = t.biggestSectionTitle;
-
-    // 2. Highlight: Lowest Red Flag (lowest score)
-    const minScore = Math.min(...items.map(it => it.num));
-    const lowestItem = items.find(it => it.num === minScore) || items[0];
-
-    if (rogLowestTitle) rogLowestTitle.textContent = lowestItem.title;
-    if (rogLowestScoreBadge) rogLowestScoreBadge.textContent = `${lowestItem.num} / 10`;
-    if (rogLowestScenario) rogLowestScenario.textContent = lowestItem.question;
-    if (rogLowestTag) rogLowestTag.textContent = t.lowestSectionTitle;
-
-    // 3. Full 1 to 10 list with given questions
     if (rogScaleListTitle) {
       rogScaleListTitle.innerHTML = `<span>${t.scaleListTitle}</span>`;
     }
@@ -824,11 +815,26 @@
       rankingCardsContainerEl.innerHTML = '';
       items.forEach(item => {
         const card = document.createElement('div');
-        card.className = 'result-scale-item-card';
+        const isLowest = item === lowestItem;
+        const isBiggest = item === biggestItem;
+        card.className = `result-scale-item-card ${isLowest ? 'is-lowest-card' : ''} ${isBiggest ? 'is-biggest-card' : ''}`;
+
+        let roleTagHTML = '';
+        if (isLowest) {
+          roleTagHTML = `<span class="scale-item-role-tag role-tag-lowest">کمترین ردفلگ تو (${item.num})</span>`;
+        } else if (isBiggest) {
+          roleTagHTML = `<span class="scale-item-role-tag role-tag-biggest">بزرگترین ردفلگ تو (${item.num})</span>`;
+        }
+
         card.innerHTML = `
-          <div class="scale-item-num-badge">${item.num}</div>
+          <div class="scale-item-num-badge ${isLowest ? 'badge-lowest' : ''} ${isBiggest ? 'badge-biggest' : ''}">
+            ${item.num}
+          </div>
           <div class="scale-item-details">
-            <div class="scale-item-title">${escapeHTML(item.title)}</div>
+            <div class="scale-item-title-row">
+              <span class="scale-item-title">${escapeHTML(item.title)}</span>
+              ${roleTagHTML}
+            </div>
             <div class="scale-item-scenario">${escapeHTML(item.question)}</div>
           </div>
         `;
@@ -836,9 +842,13 @@
       });
     }
 
-    // 4. Two-Line Summary
+    // 4. Two-Line Summary Box
     if (rogSummaryLabel) rogSummaryLabel.textContent = t.summaryLabel;
-    if (resultSummaryTextEl) resultSummaryTextEl.textContent = t.summaryText;
+    if (resultSummaryTextEl) {
+      resultSummaryTextEl.textContent = lang === 'en'
+        ? `Based on your ratings, your biggest red flag is "${biggestItem.title}" and your lowest concern is "${lowestItem.title}". This shows that psychological safety, mutual boundaries, and honesty form the non-negotiable core of your relationships.`
+        : `بر اساس انتخاب‌های شما، بزرگترین ردفلگ و خط قرمز اصلی‌تان «${biggestItem.title}» است، در حالی که کمترین حساسیت را روی «${lowestItem.title}» دارید. این اولویت‌بندی نشان می‌دهد امنیت روانی، شفافیت کلامی و حفظ مرزهای شخصی پایه و اساس اعتماد شما در رابطه است.`;
+    }
 
     // Action Buttons
     if (btnRestart) btnRestart.textContent = t.retakeBtn;
@@ -857,14 +867,14 @@
       const detailedChoices = items.map(it => ({
         qNum: it.num,
         title: it.title,
-        choice: `امتیاز: ${it.num}`
+        choice: `رتبه: ${it.num}`
       }));
 
       window.HodousTestHub.saveResult({
         testId: 'biggest-red-flag',
         testTitle: 'بزرگترین ردفلگ برای تو چیه؟',
         nickname: participantName,
-        score: `بزرگترین ردفلگ: ${biggestItem.title} (${biggestItem.num}/10)`,
+        score: `بزرگترین: ${biggestItem.title} (${biggestItem.num}) · کمترین: ${lowestItem.title} (${lowestItem.num})`,
         details: items.map(it => `${it.num}. ${it.title}`).join(' · '),
         choices: detailedChoices
       });
@@ -1000,10 +1010,12 @@
           shareUrl = window.HodousTestHub.generateShareUrl('biggest-red-flag', `۱: ${items[0].title}`);
         }
 
+        const summary = resultSummaryTextEl ? resultSummaryTextEl.textContent.trim() : '';
         const shareLines = [
           lang === 'en' ? '🚩 My Red Flag Choices (1 to 10):' : '🚩 انتخاب‌های من در تست ردفلگ (از ۱ تا ۱۰):',
           ...items.map(item => `${item.num}. ${item.title}`),
-          shareUrl ? (lang === 'en' ? `🔗 View Result: ${shareUrl}` : `🔗 مشاهده کارنامه:\n${shareUrl}`) : '',
+          summary ? (lang === 'en' ? `\n📝 Summary:\n${summary}` : `\n📝 جمع‌بندی:\n${summary}`) : '',
+          shareUrl ? (lang === 'en' ? `\n🔗 View Result: ${shareUrl}` : `\n🔗 مشاهده کارنامه:\n${shareUrl}`) : '',
           'Hodous · Red Flag Test'
         ].filter(Boolean);
         const shareText = shareLines.join('\n');
