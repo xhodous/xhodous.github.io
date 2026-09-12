@@ -708,71 +708,100 @@
       rogQuestionsList.appendChild(card);
     });
 
-    updateAnsweredCount();
+    refreshAllQuestionCardsUI();
   }
 
-  function updateQuestionCardUI(qIdx) {
-    const card = document.getElementById(`rog-q-card-${qIdx}`);
-    if (!card) return;
-    const val = state.answers[qIdx];
-    const isAnswered = (val !== undefined && val !== null);
-    card.classList.toggle('is-answered', isAnswered);
-    card.classList.remove('is-highlight-missing');
-
-    const selectEl = card.querySelector('.q-select-box');
-    if (selectEl) {
-      selectEl.value = isAnswered ? String(val) : '';
+  function refreshAllQuestionCardsUI() {
+    const valToQuestion = {};
+    for (let i = 0; i < TOTAL_QUESTIONS; i++) {
+      const v = state.answers[i];
+      if (v !== undefined && v !== null) {
+        valToQuestion[v] = i;
+      }
     }
 
-    const buttons = card.querySelectorAll('.q-pill-btn');
-    buttons.forEach(b => {
-      b.classList.toggle('is-selected', isAnswered && Number(b.dataset.val) === val);
-    });
-
-    const badge = document.getElementById(`rog-val-badge-${qIdx}`);
     const lang = state.selectedLanguage || 'fa';
     const t = UI_TEXT[lang] || UI_TEXT.fa;
-    if (badge) {
-      badge.textContent = isAnswered ? `${t.scorePrefix}: ${val}` : t.notSelected;
+
+    for (let idx = 0; idx < TOTAL_QUESTIONS; idx++) {
+      const card = document.getElementById(`rog-q-card-${idx}`);
+      if (!card) continue;
+
+      const myVal = state.answers[idx];
+      const isAnswered = (myVal !== undefined && myVal !== null);
+
+      card.classList.toggle('is-answered', isAnswered);
+      if (isAnswered) {
+        card.classList.remove('is-highlight-missing');
+      }
+
+      const badge = document.getElementById(`rog-val-badge-${idx}`);
+      if (badge) {
+        badge.textContent = isAnswered ? `${t.scorePrefix}: ${myVal}` : t.notSelected;
+      }
+
+      const buttons = card.querySelectorAll('.q-pill-btn');
+      buttons.forEach(btn => {
+        const btnVal = Number(btn.dataset.val);
+        const isSelectedByMe = (isAnswered && myVal === btnVal);
+        const isTakenByOther = (valToQuestion[btnVal] !== undefined && valToQuestion[btnVal] !== idx);
+
+        btn.classList.toggle('is-selected', isSelectedByMe);
+        btn.classList.toggle('is-disabled', isTakenByOther);
+        btn.disabled = isTakenByOther;
+
+        if (isTakenByOther) {
+          btn.title = lang === 'en' ? `Already chosen in question ${valToQuestion[btnVal] + 1}` : `قبلاً در سؤال ${valToQuestion[btnVal] + 1} انتخاب شده`;
+        } else if (isSelectedByMe) {
+          btn.title = lang === 'en' ? 'Click to deselect' : 'کلیک برای لغو انتخاب';
+        } else {
+          btn.title = `${btnVal}`;
+        }
+      });
+
+      const selectEl = card.querySelector('.q-select-box');
+      if (selectEl) {
+        selectEl.value = isAnswered ? String(myVal) : '';
+        Array.from(selectEl.options).forEach(opt => {
+          if (!opt.value) return;
+          const optVal = Number(opt.value);
+          const isTakenByOther = (valToQuestion[optVal] !== undefined && valToQuestion[optVal] !== idx);
+          opt.disabled = isTakenByOther;
+        });
+      }
     }
+
+    updateAnsweredCount();
   }
 
   function selectQuestionRating(qIdx, val) {
     initAudio();
-    playScaleSelectSound(val);
 
-    const oldVal = state.answers[qIdx];
+    // Toggle / Deselect if clicking the currently selected number on this question
+    if (state.answers[qIdx] === val) {
+      delete state.answers[qIdx];
+      saveState();
+      refreshAllQuestionCardsUI();
+      return;
+    }
 
-    // Check if another question already uses this number (each number 1..10 must be chosen only once)
-    let duplicateIdx = -1;
+    // Check if another question already uses this number (strict unique: cannot pick taken numbers)
     for (let i = 0; i < TOTAL_QUESTIONS; i++) {
       if (i !== qIdx && state.answers[i] === val) {
-        duplicateIdx = i;
-        break;
+        return;
       }
     }
 
-    if (duplicateIdx !== -1) {
-      if (oldVal !== undefined && oldVal !== null) {
-        // Swap values between questions
-        state.answers[duplicateIdx] = oldVal;
-      } else {
-        // Clear duplicate question so number is uniquely assigned
-        delete state.answers[duplicateIdx];
-      }
-      updateQuestionCardUI(duplicateIdx);
-    }
+    playScaleSelectSound(val);
 
     state.answers[qIdx] = val;
     saveState();
-
-    updateQuestionCardUI(qIdx);
 
     if (rogValidationMsg) {
       rogValidationMsg.style.display = 'none';
     }
 
-    updateAnsweredCount();
+    refreshAllQuestionCardsUI();
   }
 
   function updateAnsweredCount() {

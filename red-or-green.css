@@ -2016,6 +2016,19 @@ body.theme-mode-dark .result-hero-kicker {
   box-shadow: 0 3px 8px rgba(22, 163, 74, 0.25);
 }
 
+.q-pill-btn.is-disabled,
+.q-pill-btn:disabled {
+  opacity: 0.22 !important;
+  cursor: not-allowed !important;
+  pointer-events: none !important;
+  background: #F1F5F9 !important;
+  border-color: #E2E8F0 !important;
+  color: #94A3B8 !important;
+  transform: none !important;
+  box-shadow: none !important;
+  text-decoration: line-through;
+}
+
 .q-number-input-box {
   width: 52px;
   height: 36px;
